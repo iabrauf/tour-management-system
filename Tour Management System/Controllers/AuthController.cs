@@ -23,7 +23,6 @@ namespace Tour_Management_System.Controllers
             _context = context;
             _configuration = configuration;
         }
-       
         [HttpPost("register")]
         public async Task<ActionResult<User>> Register(User request)
         {
@@ -40,12 +39,24 @@ namespace Tour_Management_System.Controllers
                     return BadRequest("Name, Email, and Password are required.");
                 }
 
-                string passwordHash
-                = BCrypt.Net.BCrypt.HashPassword(request.PasswordHash);
+                // Hash the password
+                string passwordHash = BCrypt.Net.BCrypt.HashPassword(request.PasswordHash);
 
-                user.Name = request.Name;
-                user.Email = request.Email;
-                user.PasswordHash = passwordHash;
+                // Create a new user instance
+                User user = new User
+                {
+                    Name = request.Name,
+                    Email = request.Email,
+                    PasswordHash = passwordHash
+                };
+
+                // Check if the email is already registered
+                if (_context.Users.Any(u => u.Email == user.Email))
+                {
+                    return BadRequest("Email is already registered.");
+                }
+
+                // Add the user to the context and save changes
                 _context.Users.Add(user);
                 await _context.SaveChangesAsync();
 
@@ -56,6 +67,7 @@ namespace Tour_Management_System.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
+
 
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] UserLoginDTO request)
