@@ -10,7 +10,7 @@ const NavBar = () => {
     return (
         <>
             {pathname !== "/login" && pathname !== "/register" && (
-                < div className="navbar fixed top-0 shadow-md bg-[#ffffff] md:px-5 z-50	">
+                < div className="navbar fixed top-0 shadow-md bg-gray-200 md:px-5 z-50">
                     <div className="navbar-start">
                         <div className="dropdown">
                             <label tabIndex={0} className="btn btn-ghost lg:hidden">
