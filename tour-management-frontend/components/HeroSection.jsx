@@ -4,7 +4,7 @@ import HeroSectionCard from './HeroSectionCard'
 const HeroSection = () => {
     return (
         <div className="md:px-24 px-5 pt-28 pb-16 bg-gray-100">
-            <div className="hero h-full rounded-2xl flex justify-start items-start md:p-12" style={{ backgroundImage: 'url(https://cdn.tourradar.com/s3/content-pages/391/1320x350/T50mbt.jpg)' }}>
+            <div className="hero h-full rounded-2xl flex justify-start items-start md:p-12" style={{ backgroundImage: 'url(https://i.ibb.co/zRPFtFv/here-Section.jpg)' }}>
                 <div className="hero-content text-center text-neutral-content flex flex-col justify-start items-start">
                     <button className="rounded-lg p-1 text-white bg-gradient-to-r from-[#ff5400] to-[#ff8d54] border-none">Book With Us!</button>
                     <div className="max-w-md">
