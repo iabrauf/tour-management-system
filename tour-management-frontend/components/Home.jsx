@@ -3,10 +3,10 @@ import Tour from "./Tour"
 
 const Home = () => {
     return (
-        <>
+        <section className="h-auto">
             <HeroSection />
             <div className="p-10 ">
-                <div className="py-12">
+                <div classNamxe="py-12">
                     <h2 className="text-5xl font-bold text-center space-x-3 mb-3">Popular <span className="text-green-700">Pakistan</span>
                         <span className="text-orange-600">Tours</span></h2>
                     <p className="text-center">Best Northern Areas of Pakistan Trips</p>
@@ -24,7 +24,7 @@ const Home = () => {
 
 
 
-        </>
+        </section>
     )
 }
 
