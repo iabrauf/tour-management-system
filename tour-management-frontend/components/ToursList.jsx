@@ -1,7 +1,9 @@
-import { Eye } from 'lucide-react';
+"use client"
 import React from 'react'
+import { useRouter } from 'next/navigation'
 
-const ToursList = () => {
+const ToursList = ({ toursList }) => {
+    const router = useRouter();
     return (
         <div className="overflow-x-auto mt-20">
             <table className="table mx-5 w-[95%]">
@@ -11,41 +13,32 @@ const ToursList = () => {
                         <th>Sno.</th>
                         <th>Place Name</th>
                         <th>Departure from</th>
+                        <th>Start Date</th>
+                        <th>End Date</th>
                         <th>Price Per person</th>
-                        <th className='text-center'>Actions</th>
+                        <th className='pl-5'>Actions</th>
                     </tr>
                 </thead>
                 <tbody className='text-base'>
-                    {/* row 1 */}
-                    <tr>
-                        <th>1</th>
-                        <td>Naran Kagan</td>
-                        <td>Lahore</td>
-                        <td>13000</td>
-                        <td>
-                            <p className='text-white bg-gradient-to-r from-[#ff8d54] to-[#ff5400] hover:bg-gradient-to-r hover:from-[#ff5400] hover:to-[#ff8d54] border-none py-4 text-center rounded-full'>Book Now</p>
-                        </td>
-                    </tr>
-                    {/* row 2 */}
-                    <tr>
-                        <th>2</th>
-                        <td>Naran Kagan</td>
-                        <td>Lahore</td>
-                        <td>13000</td>
-                        <td>
-                            <p className='text-white bg-gradient-to-r from-[#ff8d54] to-[#ff5400] hover:bg-gradient-to-r hover:from-[#ff5400] hover:to-[#ff8d54] border-none py-4 text-center rounded-full'>Book Now</p>
-                        </td>
-                    </tr>
-                    {/* row 3 */}
-                    <tr>
-                        <th>3</th>
-                        <td>Naran Kagan</td>
-                        <td>Lahore</td>
-                        <td>13000</td>
-                        <td>
-                            <p className='text-white bg-gradient-to-r from-[#ff8d54] to-[#ff5400] hover:bg-gradient-to-r hover:from-[#ff5400] hover:to-[#ff8d54] border-none py-4 text-center rounded-full'>Book Now</p>
-                        </td>
-                    </tr>
+                    {
+                        toursList.map((tour) => {
+                            return (
+                                <tr key={tour.id}>
+                                    <th>{tour.id}</th>
+                                    <td>{tour.name}</td>
+                                    <td>{tour.departureFrom}</td>
+                                    <td>{tour.dateStartFrom}</td>
+                                    <td>{tour.dateEndFrom}</td>
+                                    <td>{tour.price}</td>
+                                    <td onClick={() => router.push(`/tours/${tour.id}`)}>
+                                        <button className='text-white bg-gradient-to-r from-[#ff8d54] to-[#ff5400] hover:bg-gradient-to-r hover:from-[#ff5400] hover:to-[#ff8d54] border-none p-4 text-center rounded-full'>
+                                            Book Now
+                                        </button>
+                                    </td>
+                                </tr>
+                            )
+                        })
+                    }
                 </tbody>
             </table>
         </div>
