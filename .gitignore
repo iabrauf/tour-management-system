@@ -491,7 +491,7 @@ tour-management-frontend/.yarn/install-state.gz
 tour-management-frontend/coverage
 
 # next.js
-tour-management-frontend/.next/
+tour-management-frontend/.next
 tour-management-frontend/out/
 
 # production

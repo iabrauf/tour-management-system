@@ -1,7 +1,14 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Http;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Tour_Management_System.Data;
+using Tour_Management_System.Models; 
 using Tour_Management_System.DTOs;
-using Tour_Management_System.Models;
 
 namespace Tour_Management_System.Controllers
 {
@@ -9,9 +16,7 @@ namespace Tour_Management_System.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
-        public static User user = new User();
         private readonly DataContext _context;
-
 
         public UserController(DataContext context)
         {
@@ -21,7 +26,7 @@ namespace Tour_Management_System.Controllers
         [Authorize(Roles = "Admin")]
         [HttpGet]
         [Route("Users")]
-        public async Task<ActionResult<User>> GetAllUsers()
+        public async Task<ActionResult<IEnumerable<User>>> GetAllUsers()
         {
             try
             {
@@ -83,8 +88,8 @@ namespace Tour_Management_System.Controllers
 
             if (dbUser == null)
                 return BadRequest("User not found.");
+
             string passwordHash = BCrypt.Net.BCrypt.HashPassword(request.PasswordHash);
-           
 
             dbUser.Email = request.Email;
             dbUser.PasswordHash = passwordHash;
@@ -105,6 +110,100 @@ namespace Tour_Management_System.Controllers
             await _context.SaveChangesAsync();
 
             return Ok(await _context.Users.ToListAsync());
+        }
+
+        [Authorize(Roles = "User")]
+        [HttpGet("bookedTours")]
+        public async Task<ActionResult<IEnumerable<Tour>>> GetBookedTours()
+        {
+            try
+            {
+                // Retrieve the currently logged-in user's email directly from claims
+                var userEmail = User.Identity.Name;
+
+                if (string.IsNullOrEmpty(userEmail))
+                {
+                    return BadRequest("User email not found.");
+                }
+
+                // Find user by email
+                var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == userEmail);
+
+                if (user == null)
+                {
+                    return NotFound("User not found.");
+                }
+
+                // Retrieve the tours booked by the user
+                var bookedTours = await _context.UserBookings
+                    .Where(ub => ub.UserId == user.Id)
+                    .Select(ub => ub.Tour)
+                    .ToListAsync();
+
+                return Ok(bookedTours);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
+        }
+
+        [Authorize(Roles = "User")]
+        [HttpPost("bookTour/{tourId}")]
+        public async Task<ActionResult> BookTour(int tourId)
+        {
+            try
+            {
+                // Retrieve the currently logged-in user's email directly from claims
+                var userEmail = User.Identity.Name;
+
+                if (string.IsNullOrEmpty(userEmail))
+                {
+                    return BadRequest("User email not found.");
+                }
+
+                // Find user by email
+                var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == userEmail);
+
+                if (user == null)
+                {
+                    return NotFound("User not found.");
+                }
+
+                // Find the tour by id
+                var tour = await _context.Tours.FindAsync(tourId);
+
+                if (tour == null)
+                {
+                    return NotFound("Tour not found.");
+                }
+
+                // Check if the user has already booked this tour
+                var existingBooking = await _context.UserBookings
+                    .FirstOrDefaultAsync(ub => ub.UserId == user.Id && ub.TourId == tour.Id);
+
+                if (existingBooking != null)
+                {
+                    return BadRequest("You have already booked this tour.");
+                }
+
+                // Create a new booking entry
+                var booking = new UserBooking
+                {
+                    UserId = user.Id,
+                    TourId = tour.Id,
+                    BookingDate = DateTime.UtcNow
+                };
+
+                _context.UserBookings.Add(booking);
+                await _context.SaveChangesAsync();
+
+                return Ok("Tour booked successfully.");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
         }
     }
 }
