@@ -1,68 +1,40 @@
-import ToursList from "../../components/ToursList";
-import React from "react";
+'use client';
 
-function page() {
-  const toursList = [
-    {
-      id: 1,
-      name: "Naran Kagan",
-      departureFrom: "Kathmandu",
-      dateStartFrom: "2021-09-01",
-      dateEndFrom: "2021-09-10",
-      price: 13000,
-    },
-    {
-      id: 2,
-      name: "Naran Kagan",
-      departureFrom: "Kathmandu",
-      dateStartFrom: "2021-09-01",
-      dateEndFrom: "2021-09-10",
-      price: 13000,
-    },
-    {
-      id: 3,
-      name: "Naran Kagan",
-      departureFrom: "Kathmandu",
-      dateStartFrom: "2021-09-01",
-      dateEndFrom: "2021-09-10",
-      price: 13000,
-    },
-    {
-      id: 4,
-      name: "Naran Kagan",
-      departureFrom: "Kathmandu",
-      dateStartFrom: "2021-09-01",
-      dateEndFrom: "2021-09-10",
-      price: 13000,
-    },
-    {
-      id: 5,
-      name: "Naran Kagan",
-      departureFrom: "Kathmandu",
-      dateStartFrom: "2021-09-01",
-      dateEndFrom: "2021-09-10",
-      price: 13000,
-    },
-    {
-      id: 6,
-      name: "Naran Kagan",
-      departureFrom: "Kathmandu",
-      dateStartFrom: "2021-09-01",
-      dateEndFrom: "2021-09-10",
-      price: 13000,
-    },
-    {
-      id: 7,
-      name: "Naran Kagan",
-      departureFrom: "Kathmandu",
-      dateStartFrom: "2021-09-01",
-      dateEndFrom: "2021-09-10",
-      price: 13000,
-    },
-  ]
+import ToursList from "../../components/ToursList";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+
+function Page() {
+  const [toursList, setToursList] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchTours = async () => {
+      try {
+        const response = await axios.get(`${process.env.NEXT_PUBLIC_URL}/api/Tour`);
+        setToursList(response.data);
+      } catch (error) {
+        setError(error.response.data || "Failed to fetch tours");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchTours();
+  }, []);
+
   return (
-    <ToursList toursList={toursList} />
+    <div>
+      {loading ? (
+        <p>Loading...</p>
+      ) : error ? (
+        <p>Error: {error}</p>
+      ) : (
+        <ToursList toursList={toursList} />
+      )}
+    </div>
   );
 }
 
-export default page;
+export default Page;

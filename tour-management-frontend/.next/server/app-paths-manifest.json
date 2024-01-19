@@ -1,6 +1,10 @@
 {
-  "/favicon.ico/route": "app/favicon.ico/route.js",
   "/tours/page": "app/tours/page.js",
+  "/manage-tours/page": "app/manage-tours/page.js",
+  "/login/page": "app/login/page.js",
+  "/page": "app/page.js",
   "/tours/[id]/page": "app/tours/[id]/page.js",
-  "/page": "app/page.js"
+  "/users/page": "app/users/page.js",
+  "/contact-us/page": "app/contact-us/page.js",
+  "/logout/page": "app/logout/page.js"
 }

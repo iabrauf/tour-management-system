@@ -21,14 +21,14 @@ const ToursList = ({ toursList }) => {
                 </thead>
                 <tbody className='text-base'>
                     {
-                        toursList.map((tour) => {
+                        toursList.map((tour, index) => {
                             return (
                                 <tr key={tour.id}>
-                                    <th>{tour.id}</th>
-                                    <td>{tour.name}</td>
+                                    <th>{index + 1}</th>
+                                    <td>{tour.tourName}</td>
                                     <td>{tour.departureFrom}</td>
-                                    <td>{tour.dateStartFrom}</td>
-                                    <td>{tour.dateEndFrom}</td>
+                                    <td>{tour.startDate}</td>
+                                    <td>{tour.endDate}</td>
                                     <td>{tour.price}</td>
                                     <td onClick={() => router.push(`/tours/${tour.id}`)}>
                                         <button className='text-white bg-gradient-to-r from-[#ff8d54] to-[#ff5400] hover:bg-gradient-to-r hover:from-[#ff5400] hover:to-[#ff8d54] border-none p-4 text-center rounded-full'>

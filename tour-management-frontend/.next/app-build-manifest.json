@@ -6,30 +6,45 @@
       "static/css/app/layout.css",
       "static/chunks/app/layout.js"
     ],
+    "/contact-us/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/contact-us/page.js"
+    ],
     "/tours/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
       "static/chunks/app/tours/page.js"
     ],
-    "/tours/[id]/page": [
+    "/manage-tours/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/tours/[id]/page.js"
+      "static/chunks/app/manage-tours/page.js"
+    ],
+    "/login/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/login/page.js"
+    ],
+    "/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/page.js"
     ],
     "/users/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
       "static/chunks/app/users/page.js"
     ],
-    "/contact-us/page": [
+    "/logout/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/contact-us/page.js"
+      "static/chunks/app/logout/page.js"
     ],
-    "/page": [
+    "/tours/[id]/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/page.js"
+      "static/chunks/app/tours/[id]/page.js"
     ]
   }
 }
