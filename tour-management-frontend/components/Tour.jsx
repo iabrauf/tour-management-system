@@ -1,10 +1,10 @@
+import Link from 'next/link'
 import React from 'react'
 
-const Tour = ({ type, title, location, price }) => {
+const Tour = ({ id, type, title, location, price }) => {
     return (
         <div className="w-full sm:w-1/2 md:w-1/2 xl:w-1/4 p-4">
-            <a
-                href=""
+            <Link href={`/tours/${id}`}
                 className="c-card block bg-white shadow-md hover:shadow-xl rounded-lg overflow-hidden"
             >
                 <div className="relative pb-48 overflow-hidden">
@@ -28,7 +28,7 @@ const Tour = ({ type, title, location, price }) => {
                         PKR: {price}
                     </h2>
                 </div>
-            </a>
+            </Link>
         </div>
     )
 }

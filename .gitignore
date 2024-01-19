@@ -483,6 +483,7 @@ $RECYCLE.BIN/
 
 # dependencies
 tour-management-frontend/node_modules
+tour-management-frontend/.next/
 tour-management-frontend/.pnp
 tour-management-frontend/.pnp.js
 tour-management-frontend/.yarn/install-state.gz

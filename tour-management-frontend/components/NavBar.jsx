@@ -5,6 +5,7 @@ import logo from '../assets/logo.jpg'
 import userImage from '../assets/user.svg'
 import { usePathname } from 'next/navigation'
 import Link from 'next/link'
+import { isAdmin } from '../app/utils/Auth'
 
 const NavBar = () => {
     const pathname = usePathname();
@@ -19,9 +20,13 @@ const NavBar = () => {
                             </label>
                             <ul tabIndex={0} className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
                                 <Link href="/" className='mr-5'><li>Home</li></Link>
-                                <Link href="#" className='mr-5'><li>Tours</li></Link>
-                                <Link href="#" className='mr-5'><li>Manage Tours</li></Link>
-                                <Link href="/users" className='mr-5'><li>Users</li></Link>
+                                <Link href="/tours" className='mr-5'><li>Tours</li></Link>
+                                {isAdmin() && (
+                                    <>
+                                        <Link href="/manage-tours" className='mr-5'><li>Manage Tours</li></Link>
+                                        <Link href="/users" className='mr-5'><li>Users</li></Link>
+                                    </>
+                                )}
                                 <Link href="/contact-us" className='mr-5'><li>Cantact Us</li></Link>
                             </ul>
                         </div>
@@ -36,8 +41,12 @@ const NavBar = () => {
                         <ul className="menu menu-horizontal px-1">
                             <Link href="/" className='mr-5'><li>Home</li></Link>
                             <Link href="/tours" className='mr-5'><li>Tours</li></Link>
-                            <Link href="#" className='mr-5'><li>Manage Tours</li></Link>
-                            <Link href="/users" className='mr-5'><li>Users</li></Link>
+                            {isAdmin() && (
+                                <>
+                                    <Link href="/manage-tours" className='mr-5'><li>Manage Tours</li></Link>
+                                    <Link href="/users" className='mr-5'><li>Users</li></Link>
+                                </>
+                            )}
                             <Link href="/contact-us" className='mr-5'><li>Cantact Us</li></Link>
                         </ul>
                     </div>
